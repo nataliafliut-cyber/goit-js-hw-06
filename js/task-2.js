@@ -1,26 +1,40 @@
-const getUsersWithFriend = (users, friendName) => {
-  return users.filter(user => user.friends.includes(friendName));
-};
+class Storage {
+  // Приватна властивість оголошується з символом #
+  #items;
 
-const allUsers = [
-  {    name: "Moore Hensley",    friends: ["Sharron Pace"]
-  },
-  {    name: "Sharlene Bush",    friends: ["Briana Decker", "Sharron Pace"]
-  },
-  {    name: "Ross Vazquez",    friends: ["Marilyn Mcintosh", "Padilla Garrison", "Naomi Buckner"]
-  },
-  {    name: "Elma Head",    friends: ["Goldie Gentry", "Aisha Tran"]
-  },
-  {    name: "Carey Barr",    friends: ["Jordan Sampson", "Eddie Strong"]
-  },
-  {    name: "Blackburn Dotson",    friends: ["Jacklyn Lucas", "Linda Chapman"]
-  },
-  {    name: "Sheree Anthony",    friends: ["Goldie Gentry", "Briana Decker"]
+  constructor(initialItems) {
+    this.#items = initialItems;
   }
-];
 
-console.log(getUsersWithFriend(allUsers, "Briana Decker")); 
+  // Повертає масив поточних товарів
+  getItems() {
+    return this.#items;
+  }
 
-console.log(getUsersWithFriend(allUsers, "Goldie Gentry"));
+  // Додає новий товар до масиву
+  addItem(newItem) {
+    this.#items.push(newItem);
+  }
 
-console.log(getUsersWithFriend(allUsers, "Adrian Cross" )); 
+  // Видаляє товар з масиву, якщо він там є
+  removeItem(itemToRemove) {
+    const itemIndex = this.#items.indexOf(itemToRemove);
+    
+    if (itemIndex !== -1) {
+      this.#items.splice(itemIndex, 1);
+    }
+  }
+}
+
+// Код для перевірки
+const storage = new Storage(["Nanitoids", "Prolonger", "Antigravitator"]);
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator"]
+
+storage.addItem("Droid");
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator", "Droid"]
+
+storage.removeItem("Prolonger");
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
+
+storage.removeItem("Scaner");
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
